@@ -1,0 +1,29 @@
+{
+  "name": "wspace-upload-tool",
+  "version": "1.0.0",
+  "description": "Command line tool to upload videos to specific review folders on workspace.",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "axios-cookiejar-support": "^1.0.1",
+    "form-data": "^4.0.0",
+    "fs-extra": "^9.1.0",
+    "jsdom": "^16.5.2",
+    "tough-cookie": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "upload": "node ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mirkovw/wspace-upload-tool.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mirkovw/wspace-upload-tool/issues"
+  },
+  "homepage": "https://github.com/mirkovw/wspace-upload-tool#readme"
+}
