@@ -31,10 +31,10 @@ const { JSDOM } = jsdom;
     const uploadUrl = "https://workspace.mediamonks.com/backend/project-folder/materials-upload?id=" + libraryId;
 
     const config = {
-        proxy: {
-            host: 'localhost',
-            port: 8888
-        },
+        // proxy: {
+        //     host: 'localhost',
+        //     port: 8888
+        // },
         headers: {
            'x-requested-with': 'XMLHttpRequest' //somehow it needs this. otherwise it redirects
         },
@@ -95,7 +95,7 @@ const { JSDOM } = jsdom;
 
     try {
         const res = await axios.post(uploadUrl, data, config);
-        console.log(res)
+        console.log('Succes!')
     }
 
     catch (err) {
