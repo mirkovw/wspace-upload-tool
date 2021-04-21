@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="f951a9b0-17e4-4452-90ae-ae663b8159c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/TEST_MediaMonks_nr0010_INT_xx_xx_Dummy.mp4.old" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/TEST_MediaMonks_nr0010_INT_xx_xx_Dummy_1920x1080.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/TEST_MediaMonks_nr0020_INT_xx_xx_Dummy.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/TEST_MediaMonks_nr0030_INT_xx_xx_Dummy.mp4" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +39,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1618917686673</updated>
-      <workItem from="1618917688742" duration="9229000" />
+      <workItem from="1618917688742" duration="9466000" />
+      <workItem from="1619014491259" duration="5583000" />
     </task>
     <servers />
   </component>
