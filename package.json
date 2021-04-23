@@ -15,7 +15,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "upload": "node ./src/index.js"
+    "upload": "node ./src/index.js src/video/video_1920x1080.mp4 5725"
   },
   "repository": {
     "type": "git",

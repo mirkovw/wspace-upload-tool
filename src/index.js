@@ -9,6 +9,7 @@ const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
 (async () => {
+    const cookiesPath = path.join(__dirname, '../cookies.json');
 
     const getFileData = (url) => {
         return {
@@ -29,9 +30,9 @@ const { JSDOM } = jsdom;
     const cookieJar = new tough.CookieJar();
 
     console.log('Checking if cookies.json exists...')
-    if (await fs.pathExists('./cookies.json')) {
+    if (await fs.pathExists(cookiesPath)) {
         console.log('Found. Importing cookies')
-        let cookieData = await fs.readFile('cookies.json');
+        let cookieData = await fs.readFile(cookiesPath);
         cookieJar._importCookies(JSON.parse(cookieData)); //deserialize function is not available. not going to adjust source...
     } else {
         console.log('Not found. Logging in with data from settings.json')
@@ -70,7 +71,17 @@ const { JSDOM } = jsdom;
                 ...config.headers,
                 'Authorization': res.data.id
             }
-        } catch (err) { }
+        } catch (err) {
+            if (err.response) {
+                if (err.response.data) {
+                    if (err.response.data.error) {
+                        console.log(err.response.data.error)
+                        return;
+                    }
+
+                }
+            }
+        }
 
         // get get loginUrl
         try {
@@ -101,7 +112,7 @@ const { JSDOM } = jsdom;
     console.log('Writing cookies to file..');
     const cookies = cookieJar.toJSON();
     let cookie_data = JSON.stringify(cookies, null, 2);
-    await fs.writeFile('cookies.json', cookie_data);
+    await fs.writeFile(cookiesPath, cookie_data);
 
 
     // upload file
