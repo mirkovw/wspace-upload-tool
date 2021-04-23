@@ -23,7 +23,7 @@ const { JSDOM } = jsdom;
 
     const file = getFileData(process.argv[2]); // 3rd command line arg should be the filename
     const libraryId = process.argv[3]; // 3rd command line arg should be the filename
-    let dom, userId, csrfToken, finalLoginUrl;
+    let dom, userId, csrfToken, finalLoginUrl, res;
 
     //setting up cookiejar support for Axios - needed to store and use cookies across requests
     axiosCookieJarSupport(axios);
@@ -52,7 +52,7 @@ const { JSDOM } = jsdom;
         jar: cookieJar
     };
 
-    if (cookieJar.toJSON().cookies.length < 2) {
+    const login = async () => {
 
         //get userId and id
         try {
@@ -98,15 +98,36 @@ const { JSDOM } = jsdom;
 
     }
 
+    if (cookieJar.toJSON().cookies.length < 2) {
+        await login();
+    }
+
+
+
     // get csrf token for upload, fish it from the dom
     try {
         console.log("GET: " + uploadUrl);
-        const res = await axios.get(uploadUrl, config);
-        dom = new JSDOM(res.data);
-        csrfToken = dom.window.document.querySelector('[name="_csrf"]').getAttribute("value");
-        console.log('Succes. CSRF token = ' + csrfToken)
+        res = await axios.get(uploadUrl, config);
     }
-    catch (err) { }
+    catch (err) {
+        if (err.response) {
+            if (err.response.status === 302) {
+                console.log('ERROR: Got redirected to ' + err.response.headers['x-redirect'] + '. Cookies may be out of date. Logging in again...');
+                await login();
+
+                try {
+                    res = await axios.get(uploadUrl, config);
+                } catch (err) {
+                    console.log('Still not working for some reason. Contact your administrator ;) ');
+                    return;
+                }
+            }
+        }
+    }
+
+    dom = new JSDOM(res.data);
+    csrfToken = dom.window.document.querySelector('[name="_csrf"]').getAttribute("value");
+    console.log('Succes. CSRF token = ' + csrfToken)
 
 
     console.log('Writing cookies to file..');
