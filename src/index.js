@@ -53,7 +53,6 @@ const { JSDOM } = jsdom;
     };
 
     const login = async () => {
-
         //get userId and id
         try {
             console.log("POST: https://sso-api.theasset.store/api/Accounts/login");
@@ -102,8 +101,6 @@ const { JSDOM } = jsdom;
         await login();
     }
 
-
-
     // get csrf token for upload, fish it from the dom
     try {
         console.log("GET: " + uploadUrl);
@@ -116,6 +113,7 @@ const { JSDOM } = jsdom;
                 await login();
 
                 try {
+                    console.log("GET: " + uploadUrl);
                     res = await axios.get(uploadUrl, config);
                 } catch (err) {
                     console.log('Still not working for some reason. Contact your administrator ;) ');
@@ -126,9 +124,14 @@ const { JSDOM } = jsdom;
     }
 
     dom = new JSDOM(res.data);
-    csrfToken = dom.window.document.querySelector('[name="_csrf"]').getAttribute("value");
-    console.log('Succes. CSRF token = ' + csrfToken)
 
+    try {
+        csrfToken = dom.window.document.querySelector('[name="_csrf"]').getAttribute("value");
+        console.log('Succes. CSRF token = ' + csrfToken)
+    } catch (err) {
+        console.log("Logged in successfully, but still can't find _csrf token in the result data. Cancelling upload..");
+        return;
+    }
 
     console.log('Writing cookies to file..');
     const cookies = cookieJar.toJSON();
