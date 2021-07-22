@@ -1,5 +1,5 @@
 const axios = require('axios');
-const settings = require('../settings.json');
+// const settings = require('../settings.json');
 const FormData = require('form-data');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
@@ -8,9 +8,8 @@ const path = require('path');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-(async () => {
-    const cookiesPath = path.join(__dirname, '../cookies.json');
-
+module.exports = async (params) => {
+    const cookiesPath = path.resolve(params.cookies);
     const getFileData = (url) => {
         return {
             path: url,
@@ -21,8 +20,8 @@ const { JSDOM } = jsdom;
         }
     }
 
-    const file = getFileData(process.argv[2]); // 3rd command line arg should be the filename
-    const libraryId = process.argv[3]; // 3rd command line arg should be the filename
+    const file = getFileData(params.file); // 3rd command line arg should be the filename
+    const libraryId = params.libraryId; // 3rd command line arg should be the filename
     let dom, userId, csrfToken, finalLoginUrl, res;
 
     //setting up cookiejar support for Axios - needed to store and use cookies across requests
@@ -59,8 +58,8 @@ const { JSDOM } = jsdom;
             const res = await axios.post(
                 'https://sso-api.theasset.store/api/Accounts/login',
                 {
-                    "email": settings.login,
-                    "password": settings.password
+                    "email": params.login.user,
+                    "password": params.login.pass
                 },
                 config
             );
@@ -74,8 +73,13 @@ const { JSDOM } = jsdom;
             if (err.response) {
                 if (err.response.data) {
                     if (err.response.data.error) {
-                        console.log(err.response.data.error)
-                        return;
+                        // console.log(err.response.data.error)
+                        return {
+                            success: false,
+                            error: {
+                                reason: err.response.data.error
+                            }
+                        }
                     }
 
                 }
@@ -116,8 +120,13 @@ const { JSDOM } = jsdom;
                     console.log("GET: " + uploadUrl);
                     res = await axios.get(uploadUrl, config);
                 } catch (err) {
-                    console.log('Still not working for some reason. Contact your administrator ;) ');
-                    return;
+                    //console.log('Still not working for some reason. Contact your administrator ;) ');
+                    return {
+                        success: false,
+                        error: {
+                            reason: 'Still not working for some reason. Contact your administrator ;) '
+                        }
+                    }
                 }
             }
         }
@@ -129,8 +138,13 @@ const { JSDOM } = jsdom;
         csrfToken = dom.window.document.querySelector('[name="_csrf"]').getAttribute("value");
         console.log('Succes. CSRF token = ' + csrfToken)
     } catch (err) {
-        console.log("Logged in successfully, but still can't find _csrf token in the result data. Cancelling upload..");
-        return;
+        //console.log("Logged in successfully, but still can't find _csrf token in the result data. Cancelling upload..");
+        return {
+            success: false,
+            error: {
+                reason: "Logged in successfully, but still can't find _csrf token in the result data. Cancelling upload.."
+            }
+        };
     }
 
     console.log('Writing cookies to file..');
@@ -153,10 +167,19 @@ const { JSDOM } = jsdom;
         console.log("POST: " + uploadUrl);
         const res = await axios.post(uploadUrl, data, config);
         console.log('Upload succesful.')
+        return {
+            success: true
+        }
     }
 
     catch (err) {
-        console.log('error uploading');
+        //console.log('error uploading');
+        return {
+            success: false,
+            error: {
+                reason: 'error uploading'
+            }
+        }
     }
 
-})();
+};
