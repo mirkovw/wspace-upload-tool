@@ -13,9 +13,7 @@
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mirkovw/wspace-upload-tool.git"
