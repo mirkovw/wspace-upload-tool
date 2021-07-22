@@ -1,5 +1,4 @@
 const axios = require('axios');
-// const settings = require('../settings.json');
 const FormData = require('form-data');
 const axiosCookieJarSupport = require('axios-cookiejar-support').default;
 const tough = require('tough-cookie');
@@ -39,7 +38,7 @@ module.exports = async (params) => {
     const uploadUrl = "https://workspace.mediamonks.com/backend/project-folder/materials-upload?id=" + libraryId;
 
     const config = {
-        // proxy: {
+        // proxy: { // charles proxy used for debugging. comment out before publishing
         //     host: 'localhost',
         //     port: 8888
         // },

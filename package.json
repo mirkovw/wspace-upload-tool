@@ -14,14 +14,13 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "upload": "node ./src/index.js src/video/video_1920x1080.mp4 5725"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mirkovw/wspace-upload-tool.git"
   },
-  "author": "",
+  "author": "Mirko van Willigenburg",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mirkovw/wspace-upload-tool/issues"
