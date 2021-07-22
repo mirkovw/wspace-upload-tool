@@ -6,7 +6,6 @@ node_js:
 deploy:
   - provider: npm
     email: $NPM_EMAIL
-    api_key:
-      secure: NPM_API_TOKEN
+    api_key: $NPM_API_TOKEN
     on:
       tags: true
