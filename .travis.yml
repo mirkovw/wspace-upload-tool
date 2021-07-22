@@ -1,11 +1,13 @@
 language: node_js
+cache: npm
 
 node_js:
   - '10'
 
 deploy:
   - provider: npm
-    email: $NPM_EMAIL
-    api_key: $NPM_API_TOKEN
+    email: "$NPM_EMAIL"
+    api_key: "$NPM_TOKEN"
     on:
       tags: true
+    skip_cleanup: true
