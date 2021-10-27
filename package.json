@@ -1,6 +1,6 @@
 {
   "name": "wspace-upload-tool",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Command line tool to upload videos to specific review folders on workspace.",
   "main": "./src/index.js",
   "dependencies": {
